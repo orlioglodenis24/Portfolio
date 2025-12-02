@@ -190,7 +190,7 @@ function createGitHubCard() {
         </div>
         <div class="github-content">
           <span class="project-tag">Открытый код</span>
-          <h3 class="project-title">8+ других проектов</h3>
+          <h3 class="project-title">12+ других проектов</h3>
           <p class="project-description">Полный код и документация — на моём GitHub. Открытые примеры верстки, интеграций и небольших приложений.</p>
           <div class="project-tech">
             <span class="tech-tag">React</span>

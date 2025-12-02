@@ -136,7 +136,10 @@ const modalTech = document.getElementById('modalTech');
 const modalFeatures = document.getElementById('modalFeatures');
 const modalLinks = document.getElementById('modalLinks');
 
+// ===== СЛАЙДЕР ПРОЕКТОВ =====
 let currentSlide = 0;
+let sliderInterval = null;
+let isSliderInitialized = false;
 
 function createProjectSlide(project) {
   return `
@@ -204,6 +207,140 @@ function createGitHubCard() {
   `;
 }
 
+function updateSlider() {
+  const sliderContainer = document.getElementById('sliderContainer');
+  const dots = document.querySelectorAll('.slider-dot');
+  
+  if (!sliderContainer || !sliderContainer.children.length || !isSliderInitialized) return;
+  
+  const slideWidth = sliderContainer.children[0].offsetWidth;
+  const gap = 24;
+  const translateX = -(currentSlide * (slideWidth + gap));
+  
+  sliderContainer.style.transform = `translateX(${translateX}px)`;
+  
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentSlide);
+  });
+}
+
+function goToSlide(index) {
+  const sliderContainer = document.getElementById('sliderContainer');
+  if (!sliderContainer || !sliderContainer.children.length) return;
+  
+  const totalSlides = sliderContainer.children.length;
+  currentSlide = (index + totalSlides) % totalSlides;
+  updateSlider();
+}
+
+function nextSlide() {
+  goToSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+  goToSlide(currentSlide - 1);
+}
+
+function initializeSlider() {
+  const sliderContainer = document.getElementById('sliderContainer');
+  const sliderDots = document.getElementById('sliderDots');
+  const projectsGrid = document.getElementById('projectsGrid');
+  
+  if (!sliderContainer || !sliderDots || !projectsGrid) return;
+  
+  // Очищаем контейнеры
+  sliderContainer.innerHTML = '';
+  sliderDots.innerHTML = '';
+  projectsGrid.innerHTML = '';
+  
+  // Добавляем слайды и точки
+  projects.forEach((project, index) => {
+    sliderContainer.innerHTML += createProjectSlide(project);
+    
+    const dot = document.createElement('div');
+    dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
+    dot.dataset.index = index;
+    dot.addEventListener('click', () => goToSlide(index));
+    sliderDots.appendChild(dot);
+    
+    projectsGrid.innerHTML += createProjectCard(project);
+  });
+  
+  // Добавляем GitHub карточку в сетку
+  projectsGrid.innerHTML += createGitHubCard();
+  
+  // Инициализируем слайдер
+  isSliderInitialized = true;
+  updateSlider();
+  
+  // Обработчики кликов на карточки
+  document.querySelectorAll('.project-card:not(.github-project-card), .slider-slide').forEach(card => {
+    card.addEventListener('click', () => {
+      const projectId = parseInt(card.dataset.id);
+      openProjectModal(projectId);
+    });
+  });
+}
+
+function startAutoSlide() {
+  if (window.innerWidth <= 960 && projects.length > 1) {
+    stopAutoSlide();
+    sliderInterval = setInterval(nextSlide, 5000);
+  }
+}
+
+function stopAutoSlide() {
+  if (sliderInterval) {
+    clearInterval(sliderInterval);
+    sliderInterval = null;
+  }
+}
+
+function handleResize() {
+  // Переинициализируем слайдер при изменении размера окна
+  currentSlide = 0;
+  updateSlider();
+  
+  // Перезапускаем автослайд
+  stopAutoSlide();
+  startAutoSlide();
+}
+
+// Добавляем обработчики свайпа для мобильных
+function initSwipe() {
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  const sliderContainer = document.getElementById('sliderContainer');
+  if (!sliderContainer) return;
+  
+  sliderContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    stopAutoSlide();
+  });
+  
+  sliderContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+    setTimeout(startAutoSlide, 1000);
+  });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Свайп влево - следующий слайд
+        nextSlide();
+      } else {
+        // Свайп вправо - предыдущий слайд
+        prevSlide();
+      }
+    }
+  }
+}
+
 function openProjectModal(projectId) {
   const project = projects.find(p => p.id === projectId);
   if (!project) return;
@@ -257,72 +394,67 @@ function openProjectModal(projectId) {
   document.body.style.overflow = 'hidden';
 }
 
-function initializeProjects() {
-  const sliderContainer = document.getElementById('sliderContainer');
-  const sliderDots = document.getElementById('sliderDots');
-  const projectsGrid = document.getElementById('projectsGrid');
+// ===== ИНИЦИАЛИЗАЦИЯ =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Инициализируем слайдер
+  initializeSlider();
   
-  if (!sliderContainer) return;
+  // Назначаем кнопки управления
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
   
-  sliderContainer.innerHTML = '';
-  sliderDots.innerHTML = '';
-  projectsGrid.innerHTML = '';
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
   
-  projects.forEach((project, index) => {
-    sliderContainer.innerHTML += createProjectSlide(project);
+  // Запускаем автослайд
+  startAutoSlide();
+  
+  // Инициализируем свайп для мобильных
+  initSwipe();
+  
+  // Обработчики для паузы при наведении
+  const mobileSlider = document.getElementById('mobileSlider');
+  if (mobileSlider) {
+    mobileSlider.addEventListener('mouseenter', stopAutoSlide);
+    mobileSlider.addEventListener('mouseleave', startAutoSlide);
+  }
+  
+  // Обработчик изменения размера окна
+  window.addEventListener('resize', handleResize);
+  
+  // Обновляем слайдер при первой загрузке
+  setTimeout(() => {
+    updateSlider();
+  }, 100);
+  
+  // Анимация элементов
+  const elementsToAnimate = document.querySelectorAll('.service-card, .testimonial-card, .pricing-card');
+  
+  elementsToAnimate.forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
     
-    const dot = document.createElement('div');
-    dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
-    dot.dataset.index = index;
-    dot.addEventListener('click', () => goToSlide(index));
-    sliderDots.appendChild(dot);
-    
-    projectsGrid.innerHTML += createProjectCard(project);
+    setTimeout(() => {
+      el.style.transition = 'all 0.6s ease-out';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, index * 100);
   });
-  
-  projectsGrid.innerHTML += createGitHubCard();
-  
-  document.querySelectorAll('.project-card:not(.github-project-card), .slider-slide').forEach(card => {
-    card.addEventListener('click', () => {
-      const projectId = parseInt(card.dataset.id);
-      openProjectModal(projectId);
-    });
-  });
-  
-  updateSlider();
-}
+});
 
-function updateSlider() {
-  const sliderContainer = document.getElementById('sliderContainer');
-  const dots = document.querySelectorAll('.slider-dot');
-  
-  if (!sliderContainer || !sliderContainer.children.length) return;
-  
-  const slideWidth = sliderContainer.children[0]?.offsetWidth || 0;
-  const gap = 24;
-  const translateX = -(currentSlide * (slideWidth + gap));
-  
-  sliderContainer.style.transform = `translateX(${translateX}px)`;
-  
-  dots.forEach((dot, index) => {
-    dot.classList.toggle('active', index === currentSlide);
-  });
-}
-
-function goToSlide(index) {
-  currentSlide = Math.max(0, Math.min(index, projects.length - 1));
-  updateSlider();
-}
-
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % projects.length;
-  updateSlider();
-}
-
-function prevSlide() {
-  currentSlide = (currentSlide - 1 + projects.length) % projects.length;
-  updateSlider();
-}
+// Обработка клавиш для навигации по слайдам
+document.addEventListener('keydown', (e) => {
+  if (window.innerWidth <= 960 && isSliderInitialized) {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowRight') {
+      nextSlide();
+      e.preventDefault();
+    }
+  }
+});
 
 modalClose.addEventListener('click', () => {
   modal.style.display = 'none';
@@ -341,50 +473,6 @@ document.addEventListener('keydown', (e) => {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
-  
-  if (window.innerWidth <= 960) {
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'ArrowRight') nextSlide();
-  }
-});
-
-let slideInterval;
-
-function startAutoSlide() {
-  if (window.innerWidth <= 960 && projects.length > 1) {
-    stopAutoSlide();
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-}
-
-function stopAutoSlide() {
-  clearInterval(slideInterval);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initializeProjects();
-  
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-  
-  startAutoSlide();
-  
-  const slider = document.querySelector('.projects-slider');
-  if (slider) {
-    slider.addEventListener('mouseenter', stopAutoSlide);
-    slider.addEventListener('mouseleave', startAutoSlide);
-    slider.addEventListener('touchstart', stopAutoSlide);
-    slider.addEventListener('touchend', startAutoSlide);
-  }
-  
-  window.addEventListener('resize', () => {
-    updateSlider();
-    stopAutoSlide();
-    startAutoSlide();
-  });
 });
 
 // Обновленный обработчик формы с улучшенным форматированием
@@ -606,21 +694,6 @@ pricingButtons.forEach(btn => {
     const priceName = card.querySelector('.pricing-name').textContent;
     const message = `Интересует пакет: ${encodeURIComponent(priceName)}`;
     window.open(`https://t.me/orlioglodenis24?text=${message}`, '_blank');
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const elementsToAnimate = document.querySelectorAll('.service-card, .testimonial-card, .pricing-card');
-  
-  elementsToAnimate.forEach((el, index) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    
-    setTimeout(() => {
-      el.style.transition = 'all 0.6s ease-out';
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, index * 100);
   });
 });
 

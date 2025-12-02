@@ -55,7 +55,7 @@
         demo: "https://tech-stack-denis.vercel.app",
         github: "https://github.com/orlioglodenis24"
       },
-      image: "1.jpg",
+      image: "img/1.jpg",
       badge: "Live Demo"
     },
     {
@@ -77,7 +77,7 @@
         demo: "https://logistic-test-seven.vercel.app",
         github: "https://github.com/orlioglodenis24"
       },
-      image: "2.jpg",
+      image: "img/2.jpg",
       badge: "Live Demo"
     },
     {
@@ -99,7 +99,7 @@
         demo: "#",
         github: "https://github.com/orlioglodenis24"
       },
-      image: "3.jpg",
+      image: "img/3.jpg",
       badge: "Demo Project"
     },
     {
@@ -121,7 +121,7 @@
         demo: "https://t.me/TofixChat",
         github: "https://github.com/orlioglodenis24"
       },
-      image: "4.jpg",
+      image: "img/4.jpg",
       badge: "Bot Live"
     }
   ];

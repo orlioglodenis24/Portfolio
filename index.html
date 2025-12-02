@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <title>Denis Orlioglo • Web Developer & UI Designer | Moldova</title>
+  <meta name="title" content="Denis Orlioglo • Web Developer & UI Designer | Moldova" />
+  <meta name="description" content="Профессиональная веб-разработка, дизайн и AI решения для бизнеса. Создаю лендинги, веб-приложения и автоматизацию для компаний в Молдове и СНГ." />
+  <meta name="keywords" content="веб-разработка, дизайн, лендинг, сайты, Moldova, web developer, Кишинев" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://denisdev.md/" />
+  <meta property="og:title" content="Denis • Web Developer & Designer" />
+  <meta property="og:description" content="Современные сайты, лендинги и веб-приложения для вашего бизнеса." />
+  <meta property="og:image" content="https://denisdev.md/og-image.jpg" />
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://denisdev.md/" />
+  <meta property="twitter:title" content="Denis • Web Developer & Designer" />
+  <meta property="twitter:description" content="Современные сайты, лендинги и веб-приложения" />
+  
+  <link rel="canonical" href="https://denisdev.md/" />
+  <link rel="icon" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-avatar">D</div>
+        <span>Denis Dev</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero" class="active">Главная</a></li>
+        <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#pricing">Цены</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-wrapper">
+      <div class="hero-content">
+        <h1>Веб-разработка и <span class="gradient">дизайн</span> для вашего бизнеса</h1>
+        <p>Создаю высокопроизводительные веб-приложения, лендинги и сайты, которые работают. Дизайн, вёрстка, интеграции и полная поддержка.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+            → Начать проект
+          </button>
+          <a href="https://t.me/orlioglodenis24" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            📧 Написать в Telegram
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div style="color: var(--accent); margin-bottom: 16px; font-size: clamp(28px, 5vw, 32px);">💻</div>
+          <h3 style="margin-bottom: 12px; font-size: clamp(18px, 3vw, 20px);">Полный цикл разработки</h3>
+          <p style="color: var(--muted); margin-bottom: 16px; font-size: clamp(13px, 2vw, 14px);">От идеи до запуска в production</p>
+          <div class="code-block">const project = {
+  design: "modern",
+  code: "clean",
+  hosting: "reliable"
+}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <section id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Мои проекты</div>
+      <h2 class="section-title">Реализованные работы</h2>
+      <p class="section-subtitle">От лендингов до полноценных веб-приложений</p>
+    </div>
+
+    <div class="projects-slider">
+      <div class="slider-container" id="sliderContainer">
+      </div>
+      
+      <div class="slider-controls">
+        <button class="slider-btn prev-btn" id="prevBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        
+        <div class="slider-dots" id="sliderDots">
+        </div>
+        
+        <button class="slider-btn next-btn" id="nextBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+   <div class="projects-grid" id="projectsGrid">
+  
+ <div class="projects-grid" id="projectsGrid">
+</div>
+</div>
+  </div>
+</section>
+
+<div class="modal" id="projectModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    
+    <div class="modal-image" id="modalImage">
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-header">
+        <span class="modal-tag" id="modalTag">SPA</span>
+        <h2 class="modal-title" id="modalTitle">Название проекта</h2>
+        <p class="modal-subtitle" id="modalSubtitle">Описание проекта</p>
+      </div>
+      
+      <div class="modal-info">
+        <div class="info-section">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg> Технологии</h3>
+          <div class="tech-stack" id="modalTech">
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg> Особенности</h3>
+          <ul class="features-list" id="modalFeatures">
+          </ul>
+        </div>
+        
+        <div class="info-section">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+          </svg> Ссылки</h3>
+          <div class="modal-links" id="modalLinks">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Услуги</div>
+        <h2 class="section-title">Что я делаю</h2>
+        <p class="section-subtitle">Полный спектр веб-услуг от концепции до поддержки</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3 class="service-title">UI/UX Дизайн</h3>
+          <p class="service-desc">Создаю интуитивные и красивые интерфейсы для веб и мобильных приложений</p>
+          <ul class="service-features">
+            <li>Wireframing и прототипирование</li>
+            <li>Дизайн систем</li>
+            <li>Адаптивный дизайн</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💻</div>
+          <h3 class="service-title">Веб-разработка</h3>
+          <p class="service-desc">Разработка современных, быстрых и безопасных веб-приложений</p>
+          <ul class="service-features">
+            <li>Frontend разработка</li>
+            <li>Backend интеграции</li>
+            <li>Performance оптимизация</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <h3 class="service-title">Мобильная оптимизация</h3>
+          <p class="service-desc">Совершенный опыт на всех устройствах и экранах</p>
+          <ul class="service-features">
+            <li>Responsive design</li>
+            <li>Touch-friendly интерфейсы</li>
+            <li>Performance на мобильных</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🚀</div>
+          <h3 class="service-title">Хостинг и поддержка</h3>
+          <p class="service-desc">Надежное размещение и полная техническая поддержка</p>
+          <ul class="service-features">
+            <li>Выбор оптимального хостинга</li>
+            <li>Установка и настройка</li>
+            <li>Техническая поддержка 24/7</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Цены</div>
+        <h2 class="section-title">Гибкие пакеты услуг</h2>
+        <p class="section-subtitle">Цены в MDL за работу в Кишиневе и Молдове</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 class="pricing-name">Лендинг</h3>
+          <p class="pricing-desc">Одностраничник для вашего бизнеса</p>
+          <div class="pricing-amount">1500 MDL</div>
+          <p class="pricing-period">1-2 недели</p>
+          <ul class="pricing-features">
+            <li>Современный дизайн</li>
+            <li>Адаптивная верстка</li>
+            <li>Форма контактов</li>
+            <li>Интеграция Telegram/WhatsApp</li>
+            <li>Размещение на хостинг</li>
+          </ul>
+          <button class="btn btn-secondary" style="width: 100%;" onclick="window.open('https://t.me/orlioglodenis24', '_blank')">Обсудить</button>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Популярный</div>
+          <h3 class="pricing-name">Веб-сайт</h3>
+          <p class="pricing-desc">Полноценный сайт с несколькими страницами</p>
+          <div class="pricing-amount">3000 MDL</div>
+          <p class="pricing-period">3-4 недель</p>
+          <ul class="pricing-features">
+            <li>5-10 страниц</li>
+            <li>Профессиональный дизайн</li>
+            <li>Оптимизация для мобильных</li>
+            <li>Интеграция с социальными сетями</li>
+            <li>SEO оптимизация</li>
+            <li>Поддержка 6 месяцев</li>
+          </ul>
+          <button class="btn btn-primary" style="width: 100%;" onclick="window.open('https://t.me/orlioglodenis24', '_blank')">Начать проект</button>
+        </div>
+        <div class="pricing-card">
+          <h3 class="pricing-name">Приложение</h3>
+          <p class="pricing-desc">Веб-приложение с логикой и данными</p>
+          <div class="pricing-amount">5000+ MDL</div>
+          <p class="pricing-period">обсудить</p>
+          <ul class="pricing-features">
+            <li>Все в пакете Веб-сайт</li>
+            <li>Backend разработка</li>
+            <li>Database дизайн</li>
+            <li>User authentication</li>
+            <li>Admin панель</li>
+            <li>12 месяцев поддержки</li>
+          </ul>
+          <button class="btn btn-secondary" style="width: 100%;" onclick="window.open('https://t.me/orlioglodenis24', '_blank')">Обсудить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Отзывы</div>
+        <h2 class="section-title">Мнение клиентов</h2>
+        <p class="section-subtitle">Реальные отзывы от реальных клиентов</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Отличная работа! Сайт выглядит профессионально и работает быстро.Очень рекомендую!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <div class="author-name">Маша Орлиогло</div>
+              <div class="author-role">Владелица цветочного магазина "Орхидея"</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Denis очень внимательный к деталям.Перерабатывал дизайн пока я не был полностью доволен."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <div class="author-name">Николай Петров</div>
+              <div class="author-role">Руководитель кофейни</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Профессиональный подход, быстрая работа и отличный результат. Спасибо!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <div class="author-name">Евгений Лисак</div>
+              <div class="author-role">Тренер фитнес-клуба</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-section">
+        <h2>Готовы начать свой проект?</h2>
+        <p>Напишите мне в Telegram, и мы обсудим идею, сроки и стоимость</p>
+        <a href="https://t.me/orlioglodenis24" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          → Написать в Telegram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Контакты</div>
+        <h2 class="section-title">Давайте поговорим</h2>
+        <p class="section-subtitle">Я отвечаю обычно в течение 24 часов</p>
+      </div>
+      <div style="max-width: 600px; margin: 0 auto;">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Ваше имя *</label>
+            <input type="text" id="name" name="name" required placeholder="Напишите ваше имя" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email или Telegram *</label>
+            <input type="text" id="email" name="email" required placeholder="your@email.com или @username" />
+          </div>
+          <div class="form-group">
+            <label for="project">Описание проекта *</label>
+            <textarea id="project" name="project" required placeholder="Расскажите о вашем проекте, требованиях и сроках..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Отправить заявку в Telegram
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Компания</h3>
+          <ul class="footer-links">
+            <li><a href="#portfolio">Портфолио</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="#pricing">Цены</a></li>
+            <li><a href="#contact">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Контакты</h3>
+          <ul class="footer-links">
+            <li><a href="https://t.me/orlioglodenis24" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+            <li><a href="mailto:hello@denisdev.md">Email</a></li>
+            <li><a href="https://github.com/orlioglodenis24" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Социальные сети</h3>
+          <ul class="social-links">
+            <li><a href="https://t.me/orlioglodenis24" title="Telegram" target="_blank" rel="noopener noreferrer">📱</a></li>
+            <li><a href="https://github.com/orlioglodenis24" title="GitHub" target="_blank" rel="noopener noreferrer">💻</a></li>
+            <li><a href="https://instagram.com" title="Instagram" target="_blank" rel="noopener noreferrer">📸</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Denis Development.Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

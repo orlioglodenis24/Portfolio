@@ -2137,3 +2137,67 @@
 .project-card {
   text-decoration: none;
 }
+
+.testimonial-text {
+  quotes: "«" "»";
+}
+
+.testimonial-text::before {
+  content: open-quote;
+}
+
+.testimonial-text::after {
+  content: close-quote;
+}
+
+.hero-content p + p {
+  animation: fadeInUp 0.8s ease 0.5s both;
+}
+
+#contact p {
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .hero-content p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  
+  .section-subtitle {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .service-desc, .pricing-desc {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 960px) {
+  .projects-grid {
+    display: none;
+  }
+  
+  .projects-slider {
+    display: block;
+  }
+}
+
+@media (min-width: 961px) {
+  .projects-slider {
+    display: none;
+  }
+  
+  .projects-grid {
+    display: grid;
+  }
+}

@@ -31,9 +31,3 @@
 - Vanilla JavaScript
 - Responsive Design
 - CSS Variables
-
-## 🚀 Быстрый запуск
-
-1. Клонируйте репозиторий:
-```bash
-git clone https://github.com/orlioglodenis24/portfolio.git
